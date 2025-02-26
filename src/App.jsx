@@ -7,6 +7,7 @@ import About from "./pages/About";
 import NotFound from "./pages/404";
 import Topics from "./pages/Topics";
 import MinimalEditor from "./pages/Editor";
+import ArticlePage from "./pages/ArticlePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/about" element={<About />} /> 
         <Route path="/topics" element={<Topics />} />
         <Route path="/editor" element={<MinimalEditor />} />
+        <Route path="/articles/:id" element={<ArticlePage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
