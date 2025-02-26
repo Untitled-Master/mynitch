@@ -1,47 +1,68 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User } from 'lucide-react';
 import Nav from '../components/Nav'; // Import the Nav component
 
 const ArticlesList = () => {
-  const articles = [
-    {
-      id: 1,
-      title: "The Nature of Human Existence",
-      description: "Exploring the philosophical inquiry of what it means to exist as a human being.",
-      date: "February 26, 2025",
-      author: "axmed",
-      authorImage: "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4",
-      image: "https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg",
-    },
-    {
-      id: 2,
-      title: "The Ethics of Artificial Intelligence",
-      description: "Examining the moral implications of AI and its impact on society.",
-      date: "March 5, 2025",
-      author: "axmed",
-      authorImage: "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4",
-      image: "https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg",
-    },
-    {
-      id: 3,
-      title: "The Philosophy of Time",
-      description: "Understanding the concept of time from ancient to modern philosophical perspectives.",
-      date: "March 12, 2025",
-      author: "axmed",
-      authorImage: "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4",
-      image: "https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg",
-    },
-    {
-      id: 4,
-      title: "The Meaning of Life",
-      description: "Delving into the age-old question of life's purpose and significance.",
-      date: "March 19, 2025",
-      author: "axmed",
-      authorImage: "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4",
-      image: "https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg",
-    },
-  ];
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch articles from the API
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        const response = await fetch('https://mynitchbackend-production.up.railway.app/api/posts');
+        if (!response.ok) {
+          throw new Error('Failed to fetch articles');
+        }
+        const data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="relative bg-[#09090B] text-[#FAFAFA] min-h-screen overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#09090B]/90 via-[#09090B]/70 to-[#09090B]/90 z-10" />
+          <img 
+            src="https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg" 
+            alt="Philosophy Background" 
+            className="w-full h-full object-cover opacity-40"
+          />
+        </div>
+        <div className="relative z-20 flex items-center justify-center min-h-screen">
+          <p className="text-xl text-[#FAFAFA]/70">Loading articles...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="relative bg-[#09090B] text-[#FAFAFA] min-h-screen overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#09090B]/90 via-[#09090B]/70 to-[#09090B]/90 z-10" />
+          <img 
+            src="https://i.pinimg.com/736x/70/15/46/7015460e89880329186e0e415cef6aad.jpg" 
+            alt="Philosophy Background" 
+            className="w-full h-full object-cover opacity-40"
+          />
+        </div>
+        <div className="relative z-20 flex items-center justify-center min-h-screen">
+          <p className="text-xl text-[#FAFAFA]/70">Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative bg-[#09090B] text-[#FAFAFA] min-h-screen overflow-hidden">
@@ -100,11 +121,11 @@ const ArticlesList = () => {
                   <div className="flex items-center space-x-4 text-sm text-[#FAFAFA]/60">
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{article.date}</span>
+                      <span>{new Date(article.createdAt).toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <img 
-                        src={article.authorImage} 
+                        src={article.authorImage || "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4"} 
                         alt={article.author} 
                         className="w-6 h-6 rounded-full object-cover"
                       />

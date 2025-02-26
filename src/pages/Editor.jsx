@@ -83,7 +83,8 @@ const Editor = () => {
         description,
         content,
         tags: tags.split(',').map(tag => tag.trim()), // Convert tags string to array
-        author: user.email, // Save the author's email
+        author: user.displayName,
+        authorImage: user.photoURL, // Save the author's email
         createdAt: new Date(),
       });
 
