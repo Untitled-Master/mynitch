@@ -12,13 +12,13 @@ function Nav() {
           {/* Logo and brand name */}
           <div className="flex items-center space-x-2">
             <Sparkles className="h-6 w-6 text-[#FAFAFA]" />
-            <span className="text-xl font-serif font-medium">Philosophia</span>
+            <span className="text-xl font-serif font-medium">mynitch.</span>
           </div>
 
           {/* Desktop navigation links */}
           <div className="hidden md:flex items-center space-x-6 text-sm">
             <a href="/" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Home</a>
-            <a href="/article" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Articles</a>
+            <a href="/articles" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Articles</a>
             <a href="/thinkers" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Thinkers</a>
             <a href="/about" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">About</a>
             <a href="/topics" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Topics</a>
@@ -45,7 +45,7 @@ function Nav() {
           <div className="md:hidden mt-4">
             <div className="flex flex-col space-y-4 text-sm">
               <a href="/" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Home</a>
-              <a href="/article" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Articles</a>
+              <a href="/articles" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Articles</a>
               <a href="/thinkers" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Thinkers</a>
               <a href="/about" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">About</a>
               <a href="/topics" className="text-[#FAFAFA]/80 hover:text-[#FAFAFA] transition-colors">Topics</a>

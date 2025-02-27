@@ -1,5 +1,4 @@
-// src/components/ArticlesList.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar, User } from 'lucide-react';
@@ -28,6 +27,25 @@ const ArticlesList = () => {
 
     fetchArticles();
   }, []);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Date unavailable';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return 'Invalid date';
+      
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'UTC'  // Ensure consistent timezone handling
+      }).format(date);
+    } catch (error) {
+      return 'Date unavailable';
+    }
+  };
 
   if (loading) {
     return (
@@ -115,15 +133,15 @@ const ArticlesList = () => {
                   <div className="flex items-center space-x-4 text-sm text-[#FAFAFA]/60">
                     <div className="flex items-center space-x-2">
                       <Calendar className="h-4 w-4" />
-                      <span>{new Date(article.createdAt).toLocaleDateString()}</span>
+                      <span>{article.updatedAt ? formatDate(article.updatedAt) : 'Date unavailable'}</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <img 
                         src={article.authorImage || "https://avatars.githubusercontent.com/u/128633214?s=400&u=d571e7b84a3e389d48c9a2e964a03eb0a9c26abd&v=4"} 
-                        alt={article.author} 
+                        alt={article.authorName || article.authorEmail || 'Anonymous'} 
                         className="w-6 h-6 rounded-full object-cover"
                       />
-                      <span>By {article.author}</span>
+                      <span>By {article.authorName || article.authorEmail || 'Anonymous'}</span>
                     </div>
                   </div>
                 </div>
